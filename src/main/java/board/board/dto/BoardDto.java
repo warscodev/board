@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class BoardDto {
 	
-	private int boardInx;
+	private int boardIdx;
 	private String title;
 	private String contents;
-	private int hitcnt;
+	private int hitCnt;
 	private String creatorId;
 	private LocalDateTime createdDatetime;
 	private String updaterId;

@@ -9,4 +9,6 @@ import board.board.dto.BoardDto;
 @Mapper
 public interface BoardMapper {
 	List<BoardDto> selectBoardList() throws Exception;
+	
+	void insertBoard(BoardDto board) throws Exception;
 }

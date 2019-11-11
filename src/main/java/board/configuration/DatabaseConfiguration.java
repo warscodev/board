@@ -22,7 +22,7 @@ public class DatabaseConfiguration {
 	private ApplicationContext applicationContext;
 	
 	@Bean
-	@ConfigurationProperties(prefix="mybatis.configuratino")
+	@ConfigurationProperties(prefix="mybatis.configuration")
 	public org.apache.ibatis.session.Configuration mybatisConfig(){
 		return new org.apache.ibatis.session.Configuration();
 	}
@@ -36,7 +36,7 @@ public class DatabaseConfiguration {
 	@Bean
 	public DataSource dataSource() throws Exception{
 		DataSource dataSource = new HikariDataSource(hikariConfig());
-		System.out.println(dataSource.toString()+"여기");
+		System.out.println(dataSource.toString());
 		return dataSource;
 	}
 	
