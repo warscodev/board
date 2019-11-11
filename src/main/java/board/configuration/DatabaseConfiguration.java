@@ -22,6 +22,12 @@ public class DatabaseConfiguration {
 	private ApplicationContext applicationContext;
 	
 	@Bean
+	@ConfigurationProperties(prefix="mybatis.configuratino")
+	public org.apache.ibatis.session.Configuration mybatisConfig(){
+		return new org.apache.ibatis.session.Configuration();
+	}
+	
+	@Bean
 	@ConfigurationProperties(prefix="spring.datasource.hikari")
 	public HikariConfig hikariConfig() {
 		return new HikariConfig();
@@ -39,6 +45,7 @@ public class DatabaseConfiguration {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
 		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/**/sql-*.xml"));
+		sqlSessionFactoryBean.setConfiguration(mybatisConfig());
 		return sqlSessionFactoryBean.getObject();
 	}
 	
