@@ -2,6 +2,7 @@ package board.board.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,16 @@ import board.board.service.BoardService;
 @Controller
 public class BoardController {
 	
+	private Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private  BoardService boardService;
 	
 	@RequestMapping("/board/openBoardList.do")
 	public ModelAndView openBoardList() throws Exception{
+		
+		log.debug("openBoardList");
+		
 		ModelAndView mv = new ModelAndView("/board/boardList");
 		
 		List<BoardDto> list = boardService.selectBoardList();
@@ -38,7 +44,7 @@ public class BoardController {
 		return "redirect:/board/openBoardList.do";
 	}
 	
-	/*@RequestMapping("/board/openBoardDetail.do")
+	@RequestMapping("/board/openBoardDetail.do")
 	public ModelAndView openBoardDetail(@RequestParam int boardIdx) throws Exception{
 		ModelAndView mv = new ModelAndView("/board/boardDetail");
 		
@@ -46,7 +52,32 @@ public class BoardController {
 		mv.addObject("board",board);
 		
 		return mv;
-		}*/
+		}
+	
+	@RequestMapping("/board/editBoard.do")
+	public ModelAndView editBoard(@RequestParam int boardIdx) throws Exception{
+		ModelAndView mv = new ModelAndView("/board/boardEdit");
+		
+		BoardDto board = boardService.selectBoardDetail(boardIdx);
+		mv.addObject("board", board);
+
+		return mv;
+			
+	}
+	
+	@RequestMapping("/board/updateBoard.do")
+	public String updateBoard(BoardDto board) throws Exception{
+		boardService.updateBoard(board);
+		return "redirect:/board/openBoardList.do";
+	}
+	
+	@RequestMapping("/board/deleteBoard.do")
+	public String deleteBoard(int boardIdx) throws Exception{
+		boardService.deleteBoard(boardIdx);
+		return "redirect:/board/openBoardList.do";
+	}
+
+
 		
 	}
 
