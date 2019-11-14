@@ -2,7 +2,7 @@ package board.board.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
+//import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,7 @@ import board.board.service.BoardService;
 @Controller
 public class BoardController {
 	
-	private Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
+	//private Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private  BoardService boardService;
@@ -23,7 +23,7 @@ public class BoardController {
 	@RequestMapping("/board/openBoardList.do")
 	public ModelAndView openBoardList() throws Exception{
 		
-		log.debug("openBoardList");
+		//log.debug("openBoardList");
 		
 		ModelAndView mv = new ModelAndView("/board/boardList");
 		

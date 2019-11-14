@@ -12,19 +12,18 @@ import org.springframework.stereotype.Component;
 public class LoggerAspect {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	@Around("execution(* board..controller.*controller.*(..)) or execution(* board..service.*Impl.*(..)) or"
-			+ "execution(* board..dao.*Mapper.*(..))")
+	@Around("execution(* board..controller.*Controller.*(..)) or execution(* board..service.*Impl.*(..)) or execution(* board..mapper.*Mapper.*(..))")
 	public Object logPrint(ProceedingJoinPoint joinPoint) throws Throwable{
 		String type = "";
 		String name = joinPoint.getSignature().getDeclaringTypeName();
-		if(name.indexOf("controller") > -1) {
+		if(name.indexOf("Controller") > -1) {
 			type = "Controller \t: ";
 		}
 		else if(name.indexOf("Service") > -1) {
 			type = "ServiceImpl \t: ";
 		}
 		else if(name.indexOf("Mapper") > -1) {
-			type = "Mapper \t\t ";
+			type = "Mapper\t\t : ";
 		}
 		log.debug(type+name+"."+joinPoint.getSignature().getName() + "()");
 		return joinPoint.proceed();
