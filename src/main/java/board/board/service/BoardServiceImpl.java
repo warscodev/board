@@ -34,7 +34,7 @@ public class BoardServiceImpl implements BoardService{
 		boardMapper.updateHitCount(boardIdx);
 		
 		//트랜잭션 테스트를 위한 오류코드
-		//int i = 10 / 0;
+		int i = 10 / 0;
 		return boardMapper.selectBoardDetail(boardIdx);
 	}
 	
