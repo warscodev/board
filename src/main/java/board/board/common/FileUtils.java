@@ -16,7 +16,7 @@ import board.board.dto.BoardFileDto;
 
 @Component
 public class FileUtils {
-	public List<BoardFileDto> parseFileinfo(int boardIdx, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
+	public List<BoardFileDto> parseFileInfo(int boardIdx, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
 		if(ObjectUtils.isEmpty(multipartHttpServletRequest)) {
 			return null;}
 		

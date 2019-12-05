@@ -18,8 +18,9 @@
 		]]>
 	</select>
 	
-	<insert id="insertBoard" parameterType="board.board.dto.BoardDto">
-		<![CDATA[
+	<!-- DBMS가 자동 생성키를 지원할 경우에 usGeneratedKyes를 사용가능. keyProperty는 useGeneratedKeys나 selectKey의 하위 엘리먼트에 의 리턴되는 키를 의미함. -->
+	<insert id="insertBoard" parameterType="board.board.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardIdx">
+		<![CDATA[	
 			INSERT INTO t_board
 			(
 				title,
@@ -35,6 +36,26 @@
 				'admin'
 			)
 		]]>
+	</insert>
+	
+	<insert id="insertBoardFileList" parameterType="board.board.dto.BoardFileDto">
+		<![CDATA[
+			INSERT INTO t_file
+			( board_idx, original_file_name, stored_file_path, file_size,
+			  creator_id, created_datetime
+			)
+			VALUES
+		]]>
+		<foreach collection="list" item="item" separator=",">
+			(
+				#{item.boardIdx},
+				#{item.originalFileName},
+				#{item.storedFilePath},
+				#{item.fileSize},
+				'admin',
+				NOW()
+			)			
+		</foreach> 
 	</insert>
 	
 	<select id="selectBoardDetail" parameterType="int" resultType="board.board.dto.BoardDto">
@@ -66,7 +87,7 @@
 		
 	</update>
 	
-		<update id="updateBoard" parameterType="board.board.dto.BoardDto">
+	<update id="updateBoard" parameterType="board.board.dto.BoardDto">
 		<![CDATA[
 			UPDATE t_board SET 
 				title = #{title},

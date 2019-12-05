@@ -6,13 +6,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 //import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import board.board.mapper.BoardMapper;
+import board.board.common.FileUtils;
 import board.board.dto.BoardDto;
+import board.board.dto.BoardFileDto;
 
 @Service
 
@@ -27,6 +30,9 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	@Autowired
+	private FileUtils fileUtils;
+	
 	@Override
 	public List<BoardDto> selectBoardList() throws Exception{
 		return boardMapper.selectBoardList();
@@ -34,26 +40,26 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public void insertBoard(BoardDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
-		//boardMapper.insertBoard(board);
-		if(ObjectUtils.isEmpty(multipartHttpServletRequest)==false) {
-			Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-			String name;
-			while(iterator.hasNext()) {
-				name = iterator.next();
-				log.debug("file tag name : " + name);
-				List<MultipartFile> list = multipartHttpServletRequest.getFiles(name);
-				for(MultipartFile multipartFile :list) {
-					log.debug("start file information");
-					log.debug("file name : "+ multipartFile.getOriginalFilename());
-					log.debug("file size : "+ multipartFile.getSize());
-					log.debug("file content type :" + multipartFile.getContentType());
-					log.debug("end file information.\n");
-
-				}
-
-				
-			}
+		
+		boardMapper.insertBoard(board);
+		List<BoardFileDto> list = fileUtils.parseFileInfo(board.getBoardIdx(), multipartHttpServletRequest);
+		if(CollectionUtils.isEmpty(list)==false) {
+			boardMapper.insertBoardFileList(list);
 		}
+		
+		/* 업로드된 파일 정보 로그 출력
+		  if(ObjectUtils.isEmpty(multipartHttpServletRequest)==false) {
+		  Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+		  String name; while(iterator.hasNext()) { name = iterator.next();
+		  log.debug("file tag name : " + name); List<MultipartFile> list =
+		  multipartHttpServletRequest.getFiles(name); for(MultipartFile multipartFile
+		  :list) { log.debug("start file information"); log.debug("file name : "+
+		  multipartFile.getOriginalFilename()); log.debug("file size : "+
+		  multipartFile.getSize()); log.debug("file content type :" +
+		  multipartFile.getContentType()); log.debug("end file information.\n"); } } }
+		 */
+		
+		
 	}
 	
 	@Override
