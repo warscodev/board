@@ -1,14 +1,17 @@
 package board.board.service;
 
-import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
+//import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
+/*import java.util.Iterator;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartFile;*/
+
+
 //import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -24,7 +27,7 @@ import board.board.dto.BoardFileDto;
 //@Transactional
 public class BoardServiceImpl implements BoardService{
 	
-	private Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
+	//private Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
 
 	
 	@Autowired
@@ -64,6 +67,11 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public BoardDto selectBoardDetail(int boardIdx) throws Exception{
+		
+		BoardDto board = boardMapper.selectBoardDetail(boardIdx);
+		List<BoardFileDto> fileList = boardMapper.selectBoardFileList(boardIdx);
+		board.setFileList(fileList);
+		
 		boardMapper.updateHitCount(boardIdx);
 		
 		//트랜잭션 테스트를 위한 오류코드
