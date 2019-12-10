@@ -80,6 +80,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
+	public BoardFileDto selectBoardFileInformation(int idx, int boardIdx) throws Exception{
+		return boardMapper.selectBoardFileInformation(idx, boardIdx);
+	}
+	
+	@Override
 	public void updateBoard(BoardDto board) throws Exception {
 		boardMapper.updateBoard(board);
 	}
