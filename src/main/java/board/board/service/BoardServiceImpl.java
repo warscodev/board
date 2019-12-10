@@ -2,7 +2,7 @@ package board.board.service;
 
 import java.util.List;
 
-//import org.slf4j.Logger;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -27,7 +27,7 @@ import board.board.dto.BoardFileDto;
 //@Transactional
 public class BoardServiceImpl implements BoardService{
 	
-	//private Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
+	private Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
 
 	
 	@Autowired
@@ -76,7 +76,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		//트랜잭션 테스트를 위한 오류코드
 		//int i = 10 / 0;
-		return boardMapper.selectBoardDetail(boardIdx);
+		return board;
 	}
 	
 	@Override
