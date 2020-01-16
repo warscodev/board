@@ -42,6 +42,18 @@ public class RestBoardController {
 	
 	@RequestMapping(value="/board/{boardIdx}", method=RequestMethod.GET)
 	public ModelAndView openBoardDetail(@PathVariable("boardIdx") int boardIdx) throws Exception {
+		ModelAndView mv = new ModelAndView("/board/restBoardDetail");
+		
+		BoardDto board = boardService.selectBoardDetail(boardIdx);
+		mv.addObject("board", board);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/board/{boardIdx}", method=RequestMethod.PUT)
+	public String updateBoard(BoardDto board) throws Exception{
+		boardService.updateBoard(board);
+		return "redirect:board";
 	}
 	
 	
